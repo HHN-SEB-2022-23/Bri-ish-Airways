@@ -1,0 +1,7 @@
+out/
+.idea/
+*.iml
+.vs/
+.vscode/
+.fleet/
+.DS_Store
