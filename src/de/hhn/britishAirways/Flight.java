@@ -1,11 +1,9 @@
 package de.hhn.britishAirways;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * A flight is a journey from one airport to another.
@@ -19,12 +17,13 @@ public class Flight {
     private static final Pattern FLIGHTNUM = Pattern.compile("^[A-Z]{2,3}[0-9]{1,4}$");
     private final String flightNumber;
     private final Airline provider;
-    private final Set<Pilot> pilots = new HashSet<>(4);
+    private final Set<Pilot> pilots = new HashSet<>(2);
     private Optional<LocalDateTime> departure = Optional.empty();
     private Optional<LocalDateTime> arrival = Optional.empty();
     private Optional<Plane> vehicle = Optional.empty();
     private final Set<Airport> origins = new HashSet<>(1);
     private final Set<Airport> destinations = new HashSet<>(1);
+    private final Map<Seat, Optional<Passenger>> seats = new HashMap<>(100);
     private State state = State.NOT_READY;
 
     public Flight(Airline provider, String flightNumber) throws IllegalArgumentException {
@@ -42,6 +41,8 @@ public class Flight {
 
         this.provider = provider;
         this.flightNumber = flightNumber;
+
+        System.out.printf("%s created%n", this);
     }
 
     public String getFlightNumber() {
@@ -59,16 +60,25 @@ public class Flight {
         return Collections.unmodifiableSet(this.pilots);
     }
 
-    public void addPilot(Pilot pilot) {
-        this.pilots.add(pilot);
+    /**
+     * @return true if the pilot is newly assigned to this flight, false if he was already assigned
+     */
+    public boolean addPilot(Pilot pilot) {
+        return this.pilots.add(pilot);
     }
 
-    public void removePilot(Pilot pilot) {
-        this.pilots.remove(pilot);
+    /**
+     * @return true if the pilot was assigned to this flight, false if not
+     */
+    public boolean removePilot(Pilot pilot) {
+        return this.pilots.remove(pilot);
     }
 
-    public void hasPilot(Pilot pilot) {
-        this.pilots.contains(pilot);
+    /**
+     * @return true if the pilot is assigned to this flight, false if not
+     */
+    public boolean hasPilot(Pilot pilot) {
+        return this.pilots.contains(pilot);
     }
 
     public void clearPilots() {
@@ -84,10 +94,6 @@ public class Flight {
     }
 
     public void setDeparture(Optional<LocalDateTime> departure) {
-        if (departure == null) {
-            throw new IllegalArgumentException("Departure time must not be null");
-        }
-
         this.departure = departure;
     }
 
@@ -180,6 +186,75 @@ public class Flight {
     }
 
     /**
+     * @return an unmodifiable collection of the passengers
+     */
+    public Collection<Passenger> getPassengers() {
+        return this.seats.values()
+            .stream()
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toUnmodifiableSet());
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats.keySet().removeIf(seat -> !seats.contains(seat));
+
+        for (Seat seat : seats) {
+            if (!this.seats.containsKey(seat)) {
+                this.seats.put(seat, Optional.empty());
+            }
+        }
+    }
+
+    public Result<Seat, Error> addPassenger(Seat seat, Passenger passenger) {
+        if (!this.seats.containsKey(seat)) {
+            return Result.err(new Error("Seat is not on this flight"));
+        }
+
+        if (this.seats.get(seat).isPresent()) {
+            return Result.err(new Error("Seat is already occupied"));
+        }
+
+        for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
+            var seatPassenger = entry.getValue();
+            if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
+                return Result.err(new Error("Passenger is already on this flight"));
+            }
+        }
+
+        this.seats.put(seat, Optional.ofNullable(passenger));
+
+        return Result.ok(seat);
+    }
+
+    public Result<Seat, Error> removePassenger(Passenger passenger) {
+        for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
+            var seatPassenger = entry.getValue();
+            if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
+                this.seats.put(entry.getKey(), Optional.empty());
+                return Result.ok(entry.getKey());
+            }
+        }
+
+        return Result.err(new Error("Passenger is not on this flight"));
+    }
+
+    /**
+     * @return true if the passenger is present, false otherwise
+     */
+    public boolean hasPassenger(Passenger passenger) {
+        return this.seats.values()
+            .stream()
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .anyMatch(passenger::equals);
+    }
+
+    public void clearPassengers() {
+        this.seats.replaceAll((s, v) -> Optional.empty());
+    }
+
+    /**
      * Check if this Flight instance has enough information to be scheduled.
      */
     private boolean isReady() {
@@ -264,9 +339,41 @@ public class Flight {
     @Override
     public String toString() {
         return String.format(
-            "Flight %s (%s)",
+            "%s %s",
+            this.getClass().getSimpleName(),
+            this.flightNumber
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o == this
+            || (
+                o instanceof Flight flight
+                && Objects.equals(this.flightNumber, flight.flightNumber)
+                && Objects.equals(this.pilots, flight.pilots)
+                && Objects.equals(this.vehicle, flight.vehicle)
+                && Objects.equals(this.departure, flight.departure)
+                && Objects.equals(this.arrival, flight.arrival)
+                && Objects.equals(this.origins, flight.origins)
+                && Objects.equals(this.destinations, flight.destinations)
+                && Objects.equals(this.seats, flight.seats)
+                && this.state == flight.state
+            );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
             this.flightNumber,
-            this.provider
+            this.pilots,
+            this.vehicle,
+            this.departure,
+            this.arrival,
+            this.origins,
+            this.destinations,
+            this.seats,
+            this.state
         );
     }
 

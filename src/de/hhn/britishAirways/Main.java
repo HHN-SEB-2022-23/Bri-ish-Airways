@@ -9,5 +9,6 @@ public class Main {
         var ba = new Airline("BA", "British Airways");
         var strToLhr = new Flight(ba, "BA123");
         strToLhr.setDeparture(LocalDateTime.of(2019, 1, 1, 10, 0));
+        strToLhr.setArrival(LocalDateTime.of(2019, 1, 1, 12, 0));
     }
 }
