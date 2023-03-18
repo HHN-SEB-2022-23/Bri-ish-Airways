@@ -12,11 +12,11 @@ public class Airline {
 
     private String name;
 
-    private Set<Pilot> pilots = new HashSet(50);    //Approx. no. of pilots employed by BA is 3200. No. is too high for initial capacity of the HashSet though
+    private Set<Pilot> pilots = new HashSet(50);    //Approx. no. of pilots employed by BA is 3200. No. is too high for initial capacity of the HashSet though.
 
     private Set<Flight> flights= new HashSet(50);
 
-    private Set<Plane> planes= new HashSet(20);
+    private Set<Plane> planes= new HashSet(20);     //No. of planes operated by BA is 261. No. is too high for initial capacity of the HashSet though.
 
     public Airline(String IATACode, String name){
         this.IATACode = IATACode;
