@@ -261,6 +261,15 @@ public class Flight {
         return Result.ok(this);
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+            "Flight %s (%s)",
+            this.flightNumber,
+            this.provider
+        );
+    }
+
     public enum State {
         NOT_READY, SCHEDULED, CANCELLED, DELAYED, IN_FLIGHT, LANDED
     }
