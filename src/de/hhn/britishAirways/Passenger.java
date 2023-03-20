@@ -5,9 +5,7 @@ package de.hhn.britishAirways;
  */
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Passenger {
     private final String name;
@@ -20,7 +18,7 @@ public class Passenger {
         this.name = name;
     }
 
-    public Flight[] getflights() {
+    public Flight[] getBookings() {
         return bookings.keySet().toArray(new Flight[0]);
     }
 
