@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Airport str = new Airport("STR", "Stuttgart", null);
         Airport lhr = new Airport("LHR", "London Heathrow", null);
+        str.deice();
         Airline ba = new Airline("BA", "British Airways");
         Flight strToLhr = new Flight(ba, "BA123");
         Plane plane = new Plane("Boeing 747", 526, 0, 123);

@@ -4,6 +4,11 @@ package de.hhn.britishAirways;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Henri Staudenrausch
+ * @version 1, 20.03.2023
+ */
+
 public class Airport {
     private final Set<City> cities = new HashSet<>(3);
     private final Set<Flight> arrivingFlights = new HashSet<>();
