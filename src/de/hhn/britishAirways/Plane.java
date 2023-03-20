@@ -12,7 +12,7 @@ public class Plane {
     public int hoursFlown;
     public int tailNr;
 
-    public Plane (String model, int serialNum, int hoursFlown, int tailNr) {
+    public Plane(String model, int serialNum, int hoursFlown, int tailNr) {
 
         this.model = model;
         this.serialNum = serialNum;
@@ -26,7 +26,7 @@ public class Plane {
 
     }
 
-    public void setModel (String model) {
+    public void setModel(String model) {
         this.model = model;
 
     }
@@ -36,7 +36,7 @@ public class Plane {
 
     }
 
-    public void setSerialNum (int serialNum) {
+    public void setSerialNum(int serialNum) {
         this.serialNum = serialNum;
     }
 
@@ -55,6 +55,22 @@ public class Plane {
     public void setTailNr(int tailNr) {
         this.tailNr = tailNr;
     }
-}
+
+    public void refuel() { System.out.println(this + "is refueld");}
+
+    {
+    } public void reserve() { System.out.println(this + "is reserved");}
+
+    {
+
+    }
+    public String deice() {System.out.println(this + "is deiced");{
+    }
+    return null;
+    } public String toString() {
+        return "Plane" + model + serialNum + hoursFlown + tailNr;
+
+    }
+    }
 
 
