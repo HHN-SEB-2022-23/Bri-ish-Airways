@@ -308,7 +308,7 @@ public class Flight {
     }
 
     public void takeoff() {
-        if (this.state != State.SCHEDULED) {
+        if (this.getState() != State.SCHEDULED) {
             throw new Error("Flight is not scheduled");
         }
 
@@ -322,7 +322,7 @@ public class Flight {
     }
 
     public void land() {
-        if (this.state != State.IN_FLIGHT) {
+        if (this.getState() != State.IN_FLIGHT) {
             throw new Error("Flight is not in flight");
         }
 
@@ -344,16 +344,16 @@ public class Flight {
     public boolean equals(Object o) {
         return o == this
             || (
-                o instanceof Flight flight
-                && Objects.equals(this.flightNumber, flight.flightNumber)
-                && Objects.equals(this.pilots, flight.pilots)
-                && Objects.equals(this.vehicle, flight.vehicle)
-                && Objects.equals(this.departure, flight.departure)
-                && Objects.equals(this.arrival, flight.arrival)
-                && Objects.equals(this.origins, flight.origins)
-                && Objects.equals(this.destinations, flight.destinations)
-                && Objects.equals(this.seats, flight.seats)
-                && this.state == flight.state
+                o instanceof Flight otherFlight
+                && Objects.equals(this.flightNumber, otherFlight.flightNumber)
+                && Objects.equals(this.pilots, otherFlight.pilots)
+                && Objects.equals(this.vehicle, otherFlight.vehicle)
+                && Objects.equals(this.departure, otherFlight.departure)
+                && Objects.equals(this.arrival, otherFlight.arrival)
+                && Objects.equals(this.origins, otherFlight.origins)
+                && Objects.equals(this.destinations, otherFlight.destinations)
+                && Objects.equals(this.seats, otherFlight.seats)
+                && this.getState() == otherFlight.getState()
             );
     }
 
@@ -368,7 +368,7 @@ public class Flight {
             this.origins,
             this.destinations,
             this.seats,
-            this.state
+            this.getState()
         );
     }
 

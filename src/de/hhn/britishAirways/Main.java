@@ -10,8 +10,22 @@ public class Main {
         Airline ba = new Airline("BA", "British Airways");
         Flight strToLhr = new Flight(ba, "BA123");
         Plane plane = new Plane("Boeing 747", 526, 0, 123);
+        Pilot fritz = new Pilot("Fritz Müller");
+        fritz.setEmployer(ba);
+        ba.addPilot(fritz);
+        fritz.hire();
+        Pilot hans = new Pilot("Hans Müller");
+        hans.setEmployer(ba);
+        ba.addPilot(hans);
+        hans.hire();
+        strToLhr.addPilot(fritz);
+        strToLhr.addPilot(hans);
+        strToLhr.addOrigin(str);
+        strToLhr.addDestination(lhr);
         strToLhr.setDeparture(LocalDateTime.of(2019, 1, 1, 10, 0));
         strToLhr.setArrival(LocalDateTime.of(2019, 1, 1, 12, 0));
         strToLhr.setVehicle(plane);
+        strToLhr.takeoff();
+        strToLhr.land();
     }
 }
