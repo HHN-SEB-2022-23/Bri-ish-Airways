@@ -1,5 +1,8 @@
 package de.hhn.britishAirways;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Yagmur Simsek
  * @version 0.1
@@ -18,6 +21,7 @@ public class Plane {
         this.serialNum = serialNum;
         this.hoursFlown = hoursFlown;
         this.tailNr = tailNr;
+        System.out.println("Plane created: " + this);
 
     }
 
@@ -25,10 +29,21 @@ public class Plane {
         return model;
 
     }
+    private final Set<Flight> flights = new HashSet<>();
+    public Set<Flight> getFlights(){
+        return flights;
+    }
 
     public void setModel(String model) {
         this.model = model;
 
+    }
+    public void addFlight(Flight a) {
+        flights.add(a);
+
+    }
+    public void remove(Flight flight) {
+        flights.remove(flight);
     }
 
     public int getSerialNum() {
@@ -56,21 +71,21 @@ public class Plane {
         this.tailNr = tailNr;
     }
 
-    public void refuel() { System.out.println(this + "is refueld");}
-
-    {
-    } public void reserve() { System.out.println(this + "is reserved");}
-
-    {
-
+    public void refuel() {
+        System.out.println(this + "is refueling");
     }
-    public String deice() {System.out.println(this + "is deiced");{
-    }
-    return null;
-    } public String toString() {
-        return "Plane" + model + serialNum + hoursFlown + tailNr;
 
+     public void reserve() {
+        System.out.println(this + "is reserving");
     }
+
+    public void deice() {
+        System.out.println(this + "is deicing");
     }
+
+    public String toString() {
+        return "Plane" + "Model: " +  model + " SerialNum: " + serialNum + " Hoursflown: " +  hoursFlown + " TailNum: " + tailNr;
+    }
+}
 
 
