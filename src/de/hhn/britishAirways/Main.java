@@ -12,5 +12,6 @@ public class Main {
         Plane plane = new Plane("Boeing 747", 526, 0, 123);
         strToLhr.setDeparture(LocalDateTime.of(2019, 1, 1, 10, 0));
         strToLhr.setArrival(LocalDateTime.of(2019, 1, 1, 12, 0));
+        strToLhr.setVehicle(plane);
     }
 }

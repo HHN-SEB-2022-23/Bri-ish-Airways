@@ -196,7 +196,7 @@ public class Flight {
             .collect(Collectors.toUnmodifiableSet());
     }
 
-    public void setSeats(Set<Seat> seats) {
+    public void setSeats(Set<? extends Seat> seats) {
         this.seats.keySet().removeIf(seat -> !seats.contains(seat));
 
         for (Seat seat : seats) {
@@ -206,37 +206,36 @@ public class Flight {
         }
     }
 
-    public Result<Seat, Error> addPassenger(Seat seat, Passenger passenger) {
+    public boolean addPassenger(Seat seat, Passenger passenger) {
         if (!this.seats.containsKey(seat)) {
-            return Result.err(new Error("Seat is not on this flight"));
+            return false;
         }
 
         if (this.seats.get(seat).isPresent()) {
-            return Result.err(new Error("Seat is already occupied"));
+            return false;
         }
 
         for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
             var seatPassenger = entry.getValue();
             if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
-                return Result.err(new Error("Passenger is already on this flight"));
+                return false;
             }
         }
 
         this.seats.put(seat, Optional.ofNullable(passenger));
-
-        return Result.ok(seat);
+        return true;
     }
 
-    public Result<Seat, Error> removePassenger(Passenger passenger) {
+    public boolean removePassenger(Passenger passenger) {
         for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
             var seatPassenger = entry.getValue();
             if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
                 this.seats.put(entry.getKey(), Optional.empty());
-                return Result.ok(entry.getKey());
+                return true;
             }
         }
 
-        return Result.err(new Error("Passenger is not on this flight"));
+        return false;
     }
 
     /**
@@ -285,55 +284,51 @@ public class Flight {
         return this.state;
     }
 
-    public Result<State, Error> setState(State newState) {
+    public boolean setState(State newState) {
         if (
             ( newState == State.SCHEDULED ||
               newState == State.DELAYED ||
               newState == State.IN_FLIGHT ||
               newState == State.LANDED
-            ) && !this.isReady()
+            ) && ! this.isReady()
         ) {
-            return Result.err(new Error("Flight is not ready"));
+            return false;
         }
 
         this.state = newState;
-        return Result.ok(newState);
+        return true;
     }
 
     public void refuel() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        System.out.printf("Flight %s is refueling%n", this.flightNumber);
     }
 
     public void reserve() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        System.out.printf("Flight %s is reserved%n", this.flightNumber);
     }
 
-    public Result<Flight, Error> takeoff() {
+    public void takeoff() {
         if (this.state != State.SCHEDULED) {
-            return Result.err(new Error("Flight is not scheduled"));
+            throw new Error("Flight is not scheduled");
         }
 
         if (!this.isReady()) {
-            return Result.err(new Error("Flight has not enough information to be scheduled"));
+            throw new Error("Flight has not enough information to be scheduled");
         }
-
-        // unknown takeoff logic...
 
         this.state = State.IN_FLIGHT;
 
-        return Result.ok(this);
+        System.out.printf("Flight %s is taking off%n", this.flightNumber);
     }
 
-    public Result<Flight, Error> land() {
+    public void land() {
         if (this.state != State.IN_FLIGHT) {
-            return Result.err(new Error("Flight is not in flight"));
+            throw new Error("Flight is not in flight");
         }
-
-        // unknown landing logic...
 
         this.state = State.LANDED;
 
-        return Result.ok(this);
+        System.out.printf("Flight %s has landed%n", this.flightNumber);
     }
 
     @Override
