@@ -1,6 +1,8 @@
 package de.hhn.britishAirways;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +20,11 @@ public class Main {
         hans.setEmployer(ba);
         ba.addPilot(hans);
         hans.hire();
+        Set<Seat> seats = new HashSet<>();
+        seats.add(new Seat("A12"));
+        seats.add(new Seat("B24"));
+        seats.add(new Seat("C36"));
+        strToLhr.setSeats(seats);
         strToLhr.addPilot(fritz);
         strToLhr.addPilot(hans);
         strToLhr.addOrigin(str);
