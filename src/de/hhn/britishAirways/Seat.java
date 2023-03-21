@@ -10,16 +10,21 @@ public class Seat {
         this.location=location;
         System.out.println(this + " was created");
     }
+    public String getLocation(){
+        return this.location;
+    }
+
     public void reserve(){
         System.out.println(this+" reserve");
     }
+
     @Override
     public String toString(){
-        return "Seat " + location ;
-    }
-    @Override
-    public int hashCode() {
-        return location.hashCode();
+        return "Seat " + this.location ;
     }
 
+    @Override
+    public int hashCode() {
+        return this.location.hashCode();
+    }
 }
