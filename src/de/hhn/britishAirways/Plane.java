@@ -7,7 +7,6 @@ import java.util.Set;
  * @author Yagmur Simsek
  * @version 0.1
  */
-
 public class Plane {
 
     public String model;

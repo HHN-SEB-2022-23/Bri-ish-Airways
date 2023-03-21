@@ -13,13 +13,11 @@ public class Main {
         Flight strToLhr = new Flight(ba, "BA123");
         Plane plane = new Plane("Boeing 747", 526, 0, 123);
         Pilot fritz = new Pilot("Fritz Müller");
-        fritz.setEmployer(ba);
         ba.addPilot(fritz);
-        fritz.hire();
+        fritz.hire(ba);
         Pilot hans = new Pilot("Hans Müller");
-        hans.setEmployer(ba);
         ba.addPilot(hans);
-        hans.hire();
+        hans.hire(ba);
         Set<Seat> seats = new HashSet<>();
         seats.add(new Seat("A12"));
         seats.add(new Seat("B24"));

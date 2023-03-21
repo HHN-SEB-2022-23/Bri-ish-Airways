@@ -1,12 +1,11 @@
 package de.hhn.britishAirways;
 
-/**
- * @author jannikdanecker
- */
-
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Jannik Danecker
+ */
 public class Passenger {
     private final String name;
 

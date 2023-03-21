@@ -1,7 +1,7 @@
 package de.hhn.britishAirways;
 
 /**
- * @author jan-niklas jäger
+ * @author Jan-Niklas Jäger
  */
 public class Seat {
     private final String location;
