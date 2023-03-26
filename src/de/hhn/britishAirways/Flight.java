@@ -331,6 +331,127 @@ public class Flight {
         System.out.printf("Flight %s has landed%n", this.flightNumber);
     }
 
+    /**
+     * ["a", "b", "c"] -> "a, b and c"
+     * @return a formatted string of a list of strings
+     */
+    private static String format(Collection<?> list) {
+        var text = new StringBuilder();
+        var last = Optional.empty();
+        for (var item : list) {
+            last.ifPresent(x -> {
+                if ( ! text.isEmpty()) {
+                    text.append(", ");
+                }
+                text.append(x);
+            });
+
+            last = Optional.of(item);
+        }
+
+        last.ifPresent(x -> {
+            text.append(" and ");
+            text.append(x);
+        });
+
+        return text.toString();
+    }
+
+    public void show() {
+        if (this.departure.isPresent()) {
+            System.out.printf("Flight %s on %s%n", this.flightNumber, this.departure.get().toLocalDate());
+        }
+        else {
+            System.out.printf("Flight %s%n", this.flightNumber);
+        }
+
+        System.out.printf("Offered by %s (%s)%n", this.provider, this.provider.getIATACode());
+
+        if ( ! this.pilots.isEmpty()) {
+            System.out.printf(
+                "Flown by %s%n",
+                Flight.format(this.pilots)
+            );
+        }
+
+        try {
+            var origin = this.origins.iterator().next();
+            var time = this.departure
+                .map(x -> x.toLocalDate() + " " + x.toLocalTime())
+                .orElse("unknown time");
+
+            try {
+                var city = origin.getCities().iterator().next();
+                System.out.printf(
+                    "departing %s (%s) near %s at %s%n",
+                    origin.getName(),
+                    origin.getIATACode(),
+                    city,
+                    time
+                );
+
+            }
+            catch (NoSuchElementException ignore) {
+                System.out.printf(
+                    "departing %s (%s) at %s%n",
+                    origin.getName(),
+                    origin.getIATACode(),
+                    time
+                );
+            }
+        }
+        catch (NoSuchElementException ignore) {
+            System.out.println("departing unknown");
+        }
+
+        try {
+            var destination = this.destinations.iterator().next();
+            var time = this.arrival
+                .map(x -> x.toLocalDate() + " " + x.toLocalTime())
+                .orElse("unknown time");
+
+            try {
+                var city = destination.getCities().iterator().next();
+                System.out.printf(
+                    "arriving %s (%s) near %s at %s%n",
+                    destination.getName(),
+                    destination.getIATACode(),
+                    city,
+                    time
+                );
+            }
+            catch (NoSuchElementException ignore) {
+                System.out.printf(
+                    "arriving %s (%s) at %s%n",
+                    destination.getName(),
+                    destination.getIATACode(),
+                    time
+                );
+            }
+        }
+        catch (NoSuchElementException ignore) {
+            System.out.println("arriving unknown");
+        }
+
+        this.vehicle.ifPresent(plane -> System.out.printf(
+            "using %s (%s)%n",
+            plane.getTailNr(),
+            plane.getModel()
+        ));
+
+        if ( ! this.seats.isEmpty()) {
+            System.out.printf(
+                "carrying passengers %s%n",
+                Flight.format(this.seats.entrySet()
+                    .stream()
+                    .filter(x -> x.getValue().isPresent())
+                    .map(x -> x.getValue().get().getName() + " on seat " + x.getKey().getLocation())
+                    .collect(Collectors.toList())
+                )
+            );
+        }
+    }
+
     @Override
     public String toString() {
         return String.format(

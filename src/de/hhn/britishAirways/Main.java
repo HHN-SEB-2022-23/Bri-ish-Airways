@@ -32,5 +32,7 @@ public class Main {
         strToLhr.setVehicle(plane);
         strToLhr.takeoff();
         strToLhr.land();
+        System.out.println("---");
+        strToLhr.show();
     }
 }
