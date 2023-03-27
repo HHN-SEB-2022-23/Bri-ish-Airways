@@ -14,13 +14,14 @@ public class BritishAirwaysBuildUp {
     Airport newYorkAirport;
 
     public static void main(String[] args) {
-        this.buildCity();
-        this.buildAirport();
-        this.buildFlight();
-        this.buildAirline();
-        this.buildPilot();
-        this.buildPlane();
-        this.buildBoardingPass();
+        BritishAirwaysBuildUp britishAirwaysBuildUp = new BritishAirwaysBuildUp();
+        britishAirwaysBuildUp.buildCity();
+        britishAirwaysBuildUp.buildAirport();
+        britishAirwaysBuildUp.buildFlight();
+        britishAirwaysBuildUp.buildAirline();
+        britishAirwaysBuildUp.buildPilot();
+        britishAirwaysBuildUp.buildPlane();
+        britishAirwaysBuildUp.buildBoardingPass();
     }
 
     private void buildAirline() {
