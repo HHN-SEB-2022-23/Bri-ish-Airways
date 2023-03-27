@@ -85,6 +85,10 @@ public class Airline {
         this.flights.clear();
     }
 
+    public Set<Pilot> getPilots(){
+        return this.pilots;
+    }
+
     public boolean addPlane(Plane plane){
         return this.planes.add(plane);
     }

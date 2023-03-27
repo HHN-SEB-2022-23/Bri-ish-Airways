@@ -1,10 +1,9 @@
 package de.hhn.britishAirways;
 
-import java.util.Set;
-
 public class BritishAirwaysBuildUp {
     Airline theAirline;
-    Set<Pilot> thePilots;
+    Pilot captain;
+    Pilot coPilot;
     Flight outFlight;
     Flight inFlight;
     City frankfurt;
@@ -17,9 +16,9 @@ public class BritishAirwaysBuildUp {
         BritishAirwaysBuildUp britishAirwaysBuildUp = new BritishAirwaysBuildUp();
         britishAirwaysBuildUp.buildCity();
         britishAirwaysBuildUp.buildAirport();
-        britishAirwaysBuildUp.buildFlight();
-        britishAirwaysBuildUp.buildAirline();
         britishAirwaysBuildUp.buildPilot();
+        britishAirwaysBuildUp.buildAirline();
+        britishAirwaysBuildUp.buildFlight();
         britishAirwaysBuildUp.buildPlane();
         britishAirwaysBuildUp.buildBoardingPass();
 
@@ -35,9 +34,8 @@ public class BritishAirwaysBuildUp {
 
     private void buildAirline() {
         this.theAirline = new Airline("BA", "British Airways");
-        for (Pilot pilot : this.thePilots) {
-            this.theAirline.hire(pilot);
-        }
+        this.theAirline.hire(captain);
+        this.theAirline.hire(coPilot);
     }
 
     /**
@@ -52,8 +50,8 @@ public class BritishAirwaysBuildUp {
      * @author Felix Marzioch
      */
     private void buildCity() {
-        this.frankfurt = new City("Frankfurt, Germany");
-        this.newYork = new City ("New York, USA");
+        this.frankfurt = new City("Frankfurt");
+        this.newYork = new City("New York");
 
         frankfurt.addAirport(frankfurtAirport);
         newYork.addAirport(newYorkAirport);
@@ -77,9 +75,8 @@ public class BritishAirwaysBuildUp {
      * @author Nico Vogel
      */
     private void buildPilot() {
-        var captain = new Pilot("Hans Maier");
-        var coPilot = new Pilot("Kevin Müller");
-        this.thePilots = Set.of(captain, coPilot);
+        captain = new Pilot("Hans Maier");
+        coPilot = new Pilot("Kevin Müller");
     }
 
     /**
@@ -100,8 +97,5 @@ public class BritishAirwaysBuildUp {
         BoardingPass boardingPass1 = new BoardingPass(passenger1, inFlight, seat1);
         BoardingPass boardingPass2 = new BoardingPass(passenger2, inFlight, seat2);
         BoardingPass boardingPass3 = new BoardingPass(passenger1, outFlight, seat1);
-
-
-
     }
 }
