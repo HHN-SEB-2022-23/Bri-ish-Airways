@@ -64,7 +64,12 @@ public class BritishAirwaysBuildUp {
 
     }
 
+    /**
+     * @author Yagmur Simsek
+     */
+
     private void buildPlane() {
+        this.plane = new Plane("Airbus", 321, 4, 930);
 
     }
 
