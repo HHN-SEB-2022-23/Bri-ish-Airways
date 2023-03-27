@@ -81,10 +81,12 @@ public class BritishAirwaysBuildUp {
     private void buildBoardingPass() {
         Passenger passenger1 = new Passenger("Hans Maier");
         Passenger passenger2 = new Passenger("Kevin Müller");
+        Seat seat1 = new Seat("34B", plane);
+        Seat seat2 = new Seat("34C", plane);
 
-        BoardingPass boardingPass1 = new BoardingPass(passenger1, ,);
-        BoardingPass boardingPass2 = new BoardingPass(passenger2, ,);
-        BoardingPass boardingPass3 = new BoardingPass(passenger1, ,);
+        BoardingPass boardingPass1 = new BoardingPass(passenger1, inFlight, seat1);
+        BoardingPass boardingPass2 = new BoardingPass(passenger2, inFlight, seat2);
+        BoardingPass boardingPass3 = new BoardingPass(passenger1, outFlight, seat1);
 
 
 
