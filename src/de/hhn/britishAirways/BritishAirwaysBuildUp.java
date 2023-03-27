@@ -48,7 +48,15 @@ public class BritishAirwaysBuildUp {
         this.newYorkAirport = new Airport("JFK", "John F. Kennedy International Airport", new City[]{this.newYork});
     }
 
+    /**
+     * @author Felix Marzioch
+     */
     private void buildCity() {
+        this.frankfurt = new City("Frankfurt, Germany");
+        this.newYork = new City ("New York, USA");
+
+        frankfurt.addAirport(frankfurtAirport);
+        newYork.addAirport(newYorkAirport);
 
     }
 
