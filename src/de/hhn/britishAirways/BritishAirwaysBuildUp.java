@@ -41,8 +41,15 @@ public class BritishAirwaysBuildUp {
 
     }
 
+    /**
+     * @author Frank Mayer
+     */
     private void buildFlight() {
+        this.inFlight = new Flight(this.theAirline, "ABC123");
+        this.frankfurtAirport.addArrivingFlight(this.inFlight);
 
+        this.outFlight = new Flight(this.theAirline, "ABC345");
+        this.newYorkAirport.addDepartingFlight(this.outFlight);
     }
 
     private void buildPilot() {
