@@ -472,8 +472,7 @@ public class Flight {
             this.arrival,
             this.origins,
             this.destinations,
-            this.boardingPasses,
-            this.getState()
+            this.boardingPasses
         );
     }
 

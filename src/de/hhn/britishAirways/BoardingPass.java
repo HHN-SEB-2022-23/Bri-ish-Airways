@@ -32,6 +32,6 @@ public class BoardingPass {
 
     @Override
     public int hashCode() {
-        return Objects.hash(flight, seat);
+        return Objects.hash(seat, passenger);
     }
 }

@@ -1,5 +1,7 @@
 package de.hhn.britishAirways;
 
+import java.time.LocalDateTime;
+
 public class BritishAirwaysBuildUp {
     Airline theAirline;
     Pilot captain;
@@ -69,6 +71,22 @@ public class BritishAirwaysBuildUp {
         this.outFlight = new Flight(this.theAirline, "ABC345");
         this.frankfurtAirport.addArrivingFlight(this.outFlight);
         this.newYorkAirport.addDepartingFlight(this.outFlight);
+
+        outFlight.addPilot(captain);
+        outFlight.addPilot(coPilot);
+        outFlight.setPlane(plane);
+        outFlight.addOrigin(frankfurtAirport);
+        outFlight.addDestination(newYorkAirport);
+        outFlight.setDeparture(LocalDateTime.of(2023, 3, 27, 18, 0));
+        outFlight.setArrival(LocalDateTime.of(2023, 3, 27, 20, 0));
+
+        inFlight.addPilot(captain);
+        inFlight.addPilot(coPilot);
+        inFlight.setPlane(plane);
+        inFlight.addOrigin(newYorkAirport);
+        inFlight.addDestination(frankfurtAirport);
+        inFlight.setDeparture(LocalDateTime.of(2023, 3, 28, 20, 0));
+        inFlight.setArrival(LocalDateTime.of(2023, 3, 28, 22, 0));
     }
 
     /**
