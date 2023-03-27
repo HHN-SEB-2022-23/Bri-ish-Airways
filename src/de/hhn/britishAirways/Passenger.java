@@ -1,40 +1,31 @@
 package de.hhn.britishAirways;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Jannik Danecker
  */
 public class Passenger {
     private final String name;
-
-
-    private final Map<Flight, Seat> bookings = new HashMap<>();
+    private final Set<BoardingPass> bookings = new HashSet<>();
 
 
     public Passenger(String name) {
         this.name = name;
     }
 
-    public Flight[] getBookings() {
-        return bookings.keySet().toArray(new Flight[0]);
+    public BoardingPass[] getBookings() {
+        return bookings.toArray(new BoardingPass[0]);
     }
 
     public String getName() {
         return name;
     }
 
-    public Seat getSeat(Flight flight) {
-        return bookings.get(flight);
-    }
 
-    public void addBooking(Flight flight, Seat seat){
-        bookings.put(flight, seat);
-    }
-
-    public void removeBooking(Flight flight){
-        bookings.remove(flight);
+    public void addBooking(BoardingPass pass){
+        bookings.add(pass);
     }
 
     @Override

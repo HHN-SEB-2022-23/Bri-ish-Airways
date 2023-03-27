@@ -4,7 +4,44 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Main {
+public class BritishAirwaysBuildUp {
+
+    private void buildAirline() {
+
+    }
+
+    private void buildAirport() {
+
+    }
+
+    private void buildCity() {
+
+    }
+
+    private void buildFlight() {
+
+    }
+
+    private void buildPassenger() {
+
+    }
+
+    private void buildPilot() {
+
+    }
+
+    private void buildPlane() {
+
+    }
+
+    private void buildSeat() {
+
+    }
+
+    private void buildBoardingPass() {
+
+    }
+
     public static void main(String[] args) {
         Airport str = new Airport("STR", "Stuttgart", null);
         Airport lhr = new Airport("LHR", "London Heathrow", null);

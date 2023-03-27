@@ -23,7 +23,7 @@ public class Flight {
     private Optional<Plane> vehicle = Optional.empty();
     private final Set<Airport> origins = new HashSet<>(1);
     private final Set<Airport> destinations = new HashSet<>(1);
-    private final Map<Seat, Optional<Passenger>> seats = new HashMap<>(100);
+    private final Set<BoardingPass> seats = new HashSet<>();
     private State state = State.NOT_READY;
 
     public Flight(Airline provider, String flightNumber) throws IllegalArgumentException {
@@ -189,6 +189,7 @@ public class Flight {
      * @return an unmodifiable collection of the passengers
      */
     public Collection<Passenger> getPassengers() {
+        //TODO
         return this.seats.values()
             .stream()
             .filter(Optional::isPresent)
@@ -197,6 +198,7 @@ public class Flight {
     }
 
     public void setSeats(Set<? extends Seat> seats) {
+        //TODO
         this.seats.keySet().removeIf(seat -> !seats.contains(seat));
 
         for (Seat seat : seats) {
@@ -207,6 +209,7 @@ public class Flight {
     }
 
     public boolean addPassenger(Seat seat, Passenger passenger) {
+        //TODO
         if (!this.seats.containsKey(seat)) {
             return false;
         }
@@ -227,6 +230,7 @@ public class Flight {
     }
 
     public boolean removePassenger(Passenger passenger) {
+        //TODO
         for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
             var seatPassenger = entry.getValue();
             if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
@@ -242,6 +246,7 @@ public class Flight {
      * @return true if the passenger is present, false otherwise
      */
     public boolean hasPassenger(Passenger passenger) {
+        //TODO
         return this.seats.values()
             .stream()
             .filter(Optional::isPresent)
@@ -250,6 +255,7 @@ public class Flight {
     }
 
     public void clearPassengers() {
+        //TODO
         this.seats.replaceAll((s, v) -> Optional.empty());
     }
 
@@ -278,7 +284,7 @@ public class Flight {
             this.departure.isPresent() &&
             this.departure.get().isBefore(LocalDateTime.now())
         ) {
-                this.state = State.DELAYED;
+            this.state = State.DELAYED;
         }
 
         return this.state;
@@ -442,6 +448,7 @@ public class Flight {
         if ( ! this.seats.isEmpty()) {
             System.out.printf(
                 "carrying passengers %s%n",
+                //TODO
                 Flight.format(this.seats.entrySet()
                     .stream()
                     .filter(x -> x.getValue().isPresent())
