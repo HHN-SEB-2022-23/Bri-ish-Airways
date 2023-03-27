@@ -12,6 +12,8 @@ public class BritishAirwaysBuildUp {
     City frankfurt;
     City newYork;
     Plane plane;
+    Airport frankfurtAirport;
+    Airport newYorkAirport;
 
     private void buildAirline() {
 
