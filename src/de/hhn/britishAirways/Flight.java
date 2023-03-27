@@ -20,10 +20,10 @@ public class Flight {
     private final Set<Pilot> pilots = new HashSet<>(2);
     private Optional<LocalDateTime> departure = Optional.empty();
     private Optional<LocalDateTime> arrival = Optional.empty();
-    private Optional<Plane> vehicle = Optional.empty();
+    private Optional<Plane> plane = Optional.empty();
     private final Set<Airport> origins = new HashSet<>(1);
     private final Set<Airport> destinations = new HashSet<>(1);
-    private final Set<BoardingPass> seats = new HashSet<>();
+    private final Set<BoardingPass> boardingPasses = new HashSet<>();
     private State state = State.NOT_READY;
 
     public Flight(Airline provider, String flightNumber) throws IllegalArgumentException {
@@ -90,7 +90,7 @@ public class Flight {
     }
 
     public void setDeparture(LocalDateTime departure) {
-        this.departure = Optional.of(departure);
+        this.departure = Optional.ofNullable(departure);
     }
 
     public void setDeparture(Optional<LocalDateTime> departure) {
@@ -102,23 +102,23 @@ public class Flight {
     }
 
     public void setArrival(LocalDateTime arrival) {
-        this.arrival = Optional.of(arrival);
+        this.arrival = Optional.ofNullable(arrival);
     }
 
     public void setArrival(Optional<LocalDateTime> arrival) {
         this.arrival = arrival;
     }
 
-    public Optional<Plane> getVehicle() {
-        return this.vehicle;
+    public Optional<Plane> getPlane() {
+        return this.plane;
     }
 
-    public void setVehicle(Plane vehicle) {
-        this.vehicle = Optional.of(vehicle);
+    public void setPlane(Plane plane) {
+        this.plane = Optional.ofNullable(plane);
     }
 
-    public void setVehicle(Optional<Plane> vehicle) {
-        this.vehicle = vehicle;
+    public void setPlane(Optional<Plane> vehicle) {
+        this.plane = vehicle;
     }
 
     /**
@@ -189,52 +189,38 @@ public class Flight {
      * @return an unmodifiable collection of the passengers
      */
     public Collection<Passenger> getPassengers() {
-        //TODO
-        return this.seats.values()
+        return this.boardingPasses
             .stream()
-            .filter(Optional::isPresent)
-            .map(Optional::get)
+            .map(BoardingPass::getPassenger)
             .collect(Collectors.toUnmodifiableSet());
     }
 
-    public void setSeats(Set<? extends Seat> seats) {
-        //TODO
-        this.seats.keySet().removeIf(seat -> !seats.contains(seat));
-
-        for (Seat seat : seats) {
-            if (!this.seats.containsKey(seat)) {
-                this.seats.put(seat, Optional.empty());
+    public BoardingPass addPassenger(Seat seat, Passenger passenger) throws IllegalStateException {
+        for (var bp : this.boardingPasses) {
+            if (bp.getSeat().equals(seat)) {
+                throw new IllegalStateException("Seat is already occupied");
             }
-        }
-    }
 
-    public boolean addPassenger(Seat seat, Passenger passenger) {
-        //TODO
-        if (!this.seats.containsKey(seat)) {
-            return false;
-        }
-
-        if (this.seats.get(seat).isPresent()) {
-            return false;
-        }
-
-        for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
-            var seatPassenger = entry.getValue();
-            if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
-                return false;
+            if (bp.getPassenger().equals(passenger)) {
+                throw new IllegalStateException("Passenger is already on board");
             }
         }
 
-        this.seats.put(seat, Optional.ofNullable(passenger));
-        return true;
+        var bp = new BoardingPass(passenger, this, seat);
+        this.boardingPasses.add(bp);
+        return bp;
     }
 
     public boolean removePassenger(Passenger passenger) {
-        //TODO
-        for (Map.Entry<Seat, Optional<Passenger>> entry : this.seats.entrySet()) {
-            var seatPassenger = entry.getValue();
-            if (seatPassenger.isPresent() && seatPassenger.get().equals(passenger)) {
-                this.seats.put(entry.getKey(), Optional.empty());
+        return this.boardingPasses.removeIf(bp -> bp.getPassenger().equals(passenger));
+    }
+
+    /**
+     * @return true if the passenger is present, false otherwise
+     */
+    public boolean hasPassenger(Passenger passenger) {
+        for (var bp : this.boardingPasses) {
+            if (bp.getPassenger().equals(passenger)) {
                 return true;
             }
         }
@@ -242,21 +228,8 @@ public class Flight {
         return false;
     }
 
-    /**
-     * @return true if the passenger is present, false otherwise
-     */
-    public boolean hasPassenger(Passenger passenger) {
-        //TODO
-        return this.seats.values()
-            .stream()
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .anyMatch(passenger::equals);
-    }
-
     public void clearPassengers() {
-        //TODO
-        this.seats.replaceAll((s, v) -> Optional.empty());
+        this.boardingPasses.clear();
     }
 
     /**
@@ -264,7 +237,7 @@ public class Flight {
      */
     private boolean isReady() {
         return this.pilots.size() >= 2 &&
-            this.vehicle.isPresent() &&
+            this.plane.isPresent() &&
             this.departure.isPresent() &&
             this.arrival.isPresent() &&
             ! this.origins.isEmpty() &&
@@ -356,7 +329,9 @@ public class Flight {
         }
 
         last.ifPresent(x -> {
-            text.append(" and ");
+            if ( ! text.isEmpty()) {
+                text.append(" and ");
+            }
             text.append(x);
         });
 
@@ -439,20 +414,17 @@ public class Flight {
             System.out.println("arriving unknown");
         }
 
-        this.vehicle.ifPresent(plane -> System.out.printf(
+        this.plane.ifPresent(plane -> System.out.printf(
             "using %s (%s)%n",
             plane.getTailNr(),
             plane.getModel()
         ));
 
-        if ( ! this.seats.isEmpty()) {
+        if ( ! this.boardingPasses.isEmpty()) {
             System.out.printf(
                 "carrying passengers %s%n",
-                //TODO
-                Flight.format(this.seats.entrySet()
-                    .stream()
-                    .filter(x -> x.getValue().isPresent())
-                    .map(x -> x.getValue().get().getName() + " on seat " + x.getKey().getLocation())
+                Flight.format(this.boardingPasses.stream()
+                    .map(x -> x.getPassenger().getName())
                     .collect(Collectors.toList())
                 )
             );
@@ -475,12 +447,12 @@ public class Flight {
                 o instanceof Flight otherFlight
                 && Objects.equals(this.flightNumber, otherFlight.flightNumber)
                 && Objects.equals(this.pilots, otherFlight.pilots)
-                && Objects.equals(this.vehicle, otherFlight.vehicle)
+                && Objects.equals(this.plane, otherFlight.plane)
                 && Objects.equals(this.departure, otherFlight.departure)
                 && Objects.equals(this.arrival, otherFlight.arrival)
                 && Objects.equals(this.origins, otherFlight.origins)
                 && Objects.equals(this.destinations, otherFlight.destinations)
-                && Objects.equals(this.seats, otherFlight.seats)
+                && Objects.equals(this.boardingPasses, otherFlight.boardingPasses)
                 && this.getState() == otherFlight.getState()
             );
     }
@@ -490,12 +462,12 @@ public class Flight {
         return Objects.hash(
             this.flightNumber,
             this.pilots,
-            this.vehicle,
+            this.plane,
             this.departure,
             this.arrival,
             this.origins,
             this.destinations,
-            this.seats,
+            this.boardingPasses,
             this.getState()
         );
     }
