@@ -35,10 +35,10 @@ public class BritishAirwaysBuildUp {
 
     private void buildAirline() {
         this.theAirline = new Airline("BA", "British Airways");
-        this.theAirline.hire(captain);
-        this.theAirline.hire(coPilot);
+        for (Pilot pilot : this.thePilots) {
+            this.theAirline.hire(pilot);
+        }
     }
-
 
     /**
      * @author Henri Staudenrausch
