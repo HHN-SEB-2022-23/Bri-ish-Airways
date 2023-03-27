@@ -1,7 +1,5 @@
 package de.hhn.britishAirways;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 public class BritishAirwaysBuildUp {
@@ -15,12 +13,27 @@ public class BritishAirwaysBuildUp {
     Airport frankfurtAirport;
     Airport newYorkAirport;
 
+    public static void main(String[] args) {
+        this.buildCity();
+        this.buildAirport();
+        this.buildFlight();
+        this.buildAirline();
+        this.buildPilot();
+        this.buildPlane();
+        this.buildBoardingPass();
+    }
+
     private void buildAirline() {
 
     }
 
-    private void buildAirport() {
 
+    /**
+     * @author Henri Staudenrausch
+     */
+    private void buildAirport() {
+        this.frankfurtAirport = new Airport("FRA", "Frankfurt Airport", new City[]{this.frankfurt});
+        this.newYorkAirport = new Airport("JFK", "John F. Kennedy International Airport", new City[]{this.newYork});
     }
 
     private void buildCity() {
@@ -41,15 +54,5 @@ public class BritishAirwaysBuildUp {
 
     private void buildBoardingPass() {
 
-    }
-
-    public static void main(String[] args) {
-        this.buildCity();
-        this.buildAirport();
-        this.buildFlight();
-        this.buildAirline();
-        this.buildPilot();
-        this.buildPlane();
-        this.buildBoardingPass();
     }
 }
