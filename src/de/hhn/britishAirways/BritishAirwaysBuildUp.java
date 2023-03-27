@@ -31,6 +31,7 @@ public class BritishAirwaysBuildUp {
 
     private void buildAirline() {
 
+
     }
 
 
@@ -68,6 +69,14 @@ public class BritishAirwaysBuildUp {
     }
 
     private void buildBoardingPass() {
+        Passenger passenger1 = new Passenger("Hans Maier");
+        Passenger passenger2 = new Passenger("Kevin Müller");
+
+        BoardingPass boardingPass1 = new BoardingPass(passenger1, ,);
+        BoardingPass boardingPass2 = new BoardingPass(passenger2, ,);
+        BoardingPass boardingPass3 = new BoardingPass(passenger1, ,);
+
+
 
     }
 }
