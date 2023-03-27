@@ -211,6 +211,11 @@ public class Flight {
         return bp;
     }
 
+    public BoardingPass addBoardingPass(BoardingPass bp) {
+        this.boardingPasses.add(bp);
+        return bp;
+    }
+
     public boolean removePassenger(Passenger passenger) {
         return this.boardingPasses.removeIf(bp -> bp.getPassenger().equals(passenger));
     }
