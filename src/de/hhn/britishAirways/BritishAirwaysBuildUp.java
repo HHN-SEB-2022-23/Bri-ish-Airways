@@ -29,9 +29,14 @@ public class BritishAirwaysBuildUp {
         britishAirwaysBuildUp.outFlight.show();
     }
 
+    /**
+     * @author René Ott
+     */
+
     private void buildAirline() {
-
-
+        this.theAirline = new Airline("BA", "British Airways");
+        this.theAirline.hire(captain);
+        this.theAirline.hire(coPilot);
     }
 
 
