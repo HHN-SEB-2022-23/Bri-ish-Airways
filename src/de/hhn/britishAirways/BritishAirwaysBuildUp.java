@@ -5,6 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class BritishAirwaysBuildUp {
+    Airline theAirline;
+    Set<Pilot> thePilots;
+    Flight outFlight;
+    Flight inFlight;
+    City frankfurt;
+    City newYork;
+    Plane plane;
 
     private void buildAirline() {
 
