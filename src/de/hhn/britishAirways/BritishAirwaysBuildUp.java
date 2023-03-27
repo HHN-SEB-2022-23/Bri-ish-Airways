@@ -22,10 +22,6 @@ public class BritishAirwaysBuildUp {
 
     }
 
-    private void buildPassenger() {
-
-    }
-
     private void buildPilot() {
 
     }
@@ -34,38 +30,17 @@ public class BritishAirwaysBuildUp {
 
     }
 
-    private void buildSeat() {
-
-    }
-
     private void buildBoardingPass() {
 
     }
 
     public static void main(String[] args) {
-        Airport str = new Airport("STR", "Stuttgart", null);
-        Airport lhr = new Airport("LHR", "London Heathrow", null);
-        str.deice();
-        Airline ba = new Airline("BA", "British Airways");
-        Flight strToLhr = new Flight(ba, "BA123");
-        Plane plane = new Plane("Boeing 747", 526, 0, 123);
-        Pilot fritz = new Pilot("Fritz Müller");
-        ba.addPilot(fritz);
-        fritz.hire(ba);
-        Pilot hans = new Pilot("Hans Müller");
-        ba.addPilot(hans);
-        hans.hire(ba);
-        strToLhr.addPassenger(new Seat("A4", plane), new Passenger("Brunhilde Gelbz"));
-        strToLhr.addPilot(fritz);
-        strToLhr.addPilot(hans);
-        strToLhr.addOrigin(str);
-        strToLhr.addDestination(lhr);
-        strToLhr.setDeparture(LocalDateTime.of(2019, 1, 1, 10, 0));
-        strToLhr.setArrival(LocalDateTime.of(2019, 1, 1, 12, 0));
-        strToLhr.setPlane(plane);
-        strToLhr.takeoff();
-        strToLhr.land();
-        System.out.println("---");
-        strToLhr.show();
+        this.buildCity();
+        this.buildAirport();
+        this.buildFlight();
+        this.buildAirline();
+        this.buildPilot();
+        this.buildPlane();
+        this.buildBoardingPass();
     }
 }
