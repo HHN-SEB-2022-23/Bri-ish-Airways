@@ -346,7 +346,7 @@ public class Flight {
             System.out.printf("Flight %s%n", this.flightNumber);
         }
 
-        System.out.printf("Offered by %s (%s)%n", this.provider, this.provider.getIATACode());
+        System.out.printf("Offered by %s (%s)%n", this.provider.getName(), this.provider.getIATACode());
 
         if ( ! this.pilots.isEmpty()) {
             System.out.printf(
