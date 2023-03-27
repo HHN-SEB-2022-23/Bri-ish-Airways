@@ -46,9 +46,11 @@ public class BritishAirwaysBuildUp {
      */
     private void buildFlight() {
         this.inFlight = new Flight(this.theAirline, "ABC123");
-        this.frankfurtAirport.addArrivingFlight(this.inFlight);
+        this.newYorkAirport.addArrivingFlight(this.inFlight);
+        this.frankfurtAirport.addDepartingFlight(this.inFlight);
 
         this.outFlight = new Flight(this.theAirline, "ABC345");
+        this.frankfurtAirport.addArrivingFlight(this.outFlight);
         this.newYorkAirport.addDepartingFlight(this.outFlight);
     }
 
