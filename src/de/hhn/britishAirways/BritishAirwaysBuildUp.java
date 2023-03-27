@@ -65,8 +65,13 @@ public class BritishAirwaysBuildUp {
         this.newYorkAirport.addDepartingFlight(this.outFlight);
     }
 
+    /**
+     * @author Nico Vogel
+     */
     private void buildPilot() {
-
+        var captain = new Pilot("Hans Maier");
+        var coPilot = new Pilot("Kevin Müller");
+        this.thePilots = Set.of(captain, coPilot);
     }
 
     /**
