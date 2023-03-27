@@ -22,6 +22,11 @@ public class BritishAirwaysBuildUp {
         britishAirwaysBuildUp.buildPilot();
         britishAirwaysBuildUp.buildPlane();
         britishAirwaysBuildUp.buildBoardingPass();
+
+        System.out.println("---");
+        britishAirwaysBuildUp.inFlight.show();
+        System.out.println("---");
+        britishAirwaysBuildUp.outFlight.show();
     }
 
     private void buildAirline() {
