@@ -100,12 +100,15 @@ public class BritishAirwaysBuildUp {
     /**
      * @author Yagmur Simsek
      */
-
     private void buildPlane() {
         this.plane = new Plane("Airbus", 321, 4, 930);
-
+        this.outFlight.setPlane(this.plane);
+        this.inFlight.setPlane(this.plane);
     }
 
+    /**
+     * @author Jannik Danecker, Jan-Niklas Jäger
+     */
     private void buildBoardingPass() {
         Passenger passenger1 = new Passenger("Hans Maier");
         Passenger passenger2 = new Passenger("Kevin Müller");
