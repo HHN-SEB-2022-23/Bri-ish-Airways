@@ -72,21 +72,21 @@ public class BritishAirwaysBuildUp {
         this.frankfurtAirport.addArrivingFlight(this.outFlight);
         this.newYorkAirport.addDepartingFlight(this.outFlight);
 
-        outFlight.addPilot(captain);
-        outFlight.addPilot(coPilot);
-        outFlight.setPlane(plane);
-        outFlight.addOrigin(frankfurtAirport);
-        outFlight.addDestination(newYorkAirport);
-        outFlight.setDeparture(LocalDateTime.of(2023, 3, 27, 18, 0));
-        outFlight.setArrival(LocalDateTime.of(2023, 3, 27, 20, 0));
+        this.outFlight.addPilot(this.captain);
+        this.outFlight.addPilot(this.coPilot);
+        this.outFlight.setPlane(this.plane);
+        this.outFlight.addOrigin(this.frankfurtAirport);
+        this.outFlight.addDestination(this.newYorkAirport);
+        this.outFlight.setDeparture(LocalDateTime.of(2023, 3, 27, 18, 0));
+        this.outFlight.setArrival(LocalDateTime.of(2023, 3, 27, 20, 0));
 
-        inFlight.addPilot(captain);
-        inFlight.addPilot(coPilot);
-        inFlight.setPlane(plane);
-        inFlight.addOrigin(newYorkAirport);
-        inFlight.addDestination(frankfurtAirport);
-        inFlight.setDeparture(LocalDateTime.of(2023, 3, 28, 20, 0));
-        inFlight.setArrival(LocalDateTime.of(2023, 3, 28, 22, 0));
+        this.inFlight.addPilot(this.captain);
+        this.inFlight.addPilot(this.coPilot);
+        this.inFlight.setPlane(this.plane);
+        this.inFlight.addOrigin(this.newYorkAirport);
+        this.inFlight.addDestination(this.frankfurtAirport);
+        this.inFlight.setDeparture(LocalDateTime.of(2023, 3, 28, 20, 0));
+        this.inFlight.setArrival(LocalDateTime.of(2023, 3, 28, 22, 0));
     }
 
     /**
